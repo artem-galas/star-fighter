@@ -1,0 +1,19 @@
+{
+  "name": "round-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "artem-galas <artem.galas@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "rxjs": "^6.3.3",
+    "typescript": "^3.1.1"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
