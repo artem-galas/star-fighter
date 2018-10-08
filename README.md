@@ -1,4 +1,4 @@
-# Space Ship Game
+# Star Fighter
 
 This game develop using rxJs.
 
