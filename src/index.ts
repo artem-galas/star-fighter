@@ -99,8 +99,6 @@ const ENEMY_SHOT_RESP: number = 750;
 const SHOTING_SPEED: number = 15;
 const SCORE_INC: number = 10;
 
-
-
 /** util game functions*/
 function isVisible(obj: any) {
   return obj.x > -96 && obj.x < canvas.width + 96 &&
@@ -113,9 +111,6 @@ function collision(target1: any, target2: any) {
 }
 function gameOver(ship: any, enemies: any) {
   return enemies.some((enemy:any)=> {
-    //if (collision(ship, enemy)) {
-    //    return true;
-    //}
     return enemy.shots.some((shot: any)=> {
       return collision(shot, ship)
     })
@@ -138,7 +133,6 @@ function drawShip(x: number, y: number) {
   ctx.drawImage(spaceShip, x, y);
 }
 
-
 function drawMyShots(shots: any[], enemies: any[]) {
   ctx.fillStyle = '#B8860B';
   shots.forEach((shot:any, i:number)=> {
@@ -158,7 +152,6 @@ function drawMyShots(shots: any[], enemies: any[]) {
     //ctx.drawImage(missle, shot.xR, shot.yR);
   });
 }
-
 
 function drawEnemies(enemies: any) {
   enemies.forEach((enemy:any)=> {
@@ -220,12 +213,11 @@ let myFire$ = observableFromEvent(canvas, 'click')
     timestamp()
   );
 
-let myShots$ = combineLatest(mySpaceShip$, myFire$, (mySpaceShip: any, myFire: any) => {
-  return {
+let myShots$ = combineLatest(mySpaceShip$, myFire$,
+  (mySpaceShip: any, myFire: any) => ({
     timestamp: myFire.timestamp,
     x: mySpaceShip.x
-  }
-})
+  }))
   .pipe(
     distinctUntilChanged((shot) => shot.timestamp),
     scan((shots: any, shot: any) => {

@@ -1,24 +1,40 @@
-// `CheckerPlugin` is optional. Use it if you want async error reporting.
-// We need this plugin to detect a `--watch` mode. It may be removed later
-// after https://github.com/webpack/webpack/issues/3460 will be resolved.
-const { CheckerPlugin } = require('awesome-typescript-loader')
+const path = require('path');
+const webpack = require('webpack');
+
+const { CheckerPlugin } = require('awesome-typescript-loader');
+const ROOT = path.resolve( __dirname, 'src' );
+const DESTINATION = path.resolve( __dirname, 'dist' );
 
 module.exports = {
-
-  // Currently we need to add '.ts' to the resolve.extensions array.
+  context: ROOT,
+  entry: {
+    'main': './index.ts'
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: DESTINATION
+  },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.js'],
+    modules: [
+        ROOT,
+        'node_modules'
+    ]
   },
 
-  // Source maps support ('inline-source-map' also works)
   devtool: 'source-map',
-
-  // Add the loader for .ts files.
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader'
+        enforce: 'pre',
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: 'tslint-loader'
+      },
+      {
+        test: /\.ts$/,
+        exclude: [ /node_modules/ ],
+        use: 'awesome-typescript-loader'
       }
     ]
   },
